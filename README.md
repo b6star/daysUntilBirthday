@@ -1,49 +1,91 @@
-# Scriptable Script: daysUntilBirthday
-- Script for the iOS App Scriptable
-- up to 20 people of your contacts are shown simultaneously with their birthday and how many days are left
-- contacts are sorted by how far away their birthday is (nearest first)
+# daysUntilBirthday
 
+Forked and modified from [lwitzani/daysUntilBirthday](https://github.com/lwitzani/daysUntilBirthday). Credit for the original project goes to [lwitzani](https://github.com/lwitzani).
 
-# How to use
-Mode 1 (default): Only chosen contacts:
-- in your contacts app, edit the contacts you want to be visible in this widget
-- you need to set up an additional 'date' field in your contact and give the date the label '**daysUntilBirthday**'
-- run the script initially in the Scriptable app to create a **json file in iCloud** containing contact information for faster access
-- when you add new contacts via the label, run the script again in the app to update the json! This makes the changes visible in iCloud-mode
-- when setting the script up as **Widget**, use the **largest presentation mode** and **provide the parameter 'iCloud'** (without the ' ')
-- if contacts have a nickname set, the **nickname will be chosen**
-- if the name contains a space character, only the part before the first space is used (in case of a nickname like 'Julian ❤️' the name in this widget will be 'Julian')
+A birthday countdown widget for Scriptable on iOS. Add names and birthdays directly to the script to see upcoming birthdays, sorted from nearest to farthest.
 
-Mode 2: Show all contacts with a Birthday configured
-- set the variable showAllContacts to true or provide the parameter 'showAll' in widget mode to show all contacts that have a birthday in the regular birthday field configured
+## Features
 
-iCloud-Mode:
-- set the variable useIcloud to true or provide the parameter 'iCloud' in widget mode to never recalculate which contacts are shown again
-- if false -> everytime the contacts are scanned
-- if true -> contacts are not scanned and last used contacts are used again
+- Calculates the days remaining on every run, without modifying the birthday list.
+- Displays dates as `SEP 14`.
+- Highlights today's birthday with green, bold `Today!` text and a matching date.
+- Automatically follows the system's light or dark appearance.
+- Supports small, medium, and large Home Screen widgets.
+- Requires no Contacts access, external data files, or network requests.
 
+## Screenshots
 
-# Contact Setup for the default mode 1
-- provide all the contacts you want to see with a new date
-- give the date the label 'daysUntilBirthday'
-- an actual birthday set in the regular birthday field is not necessary
+<!-- Add an actual iPhone screenshot as widget-screenshot.png in the repository root,
+then uncomment the image below.
+<img src="widget-screenshot.png" alt="Birthday widgets on an iPhone Home Screen" width="360">
+-->
 
+## Setup
 
+1. Install Scriptable on your iPhone or iPad.
+2. Create a new script and paste the contents of [daysUntilBirthdayWidget.js](daysUntilBirthdayWidget.js).
+3. Replace the `birthdays` array at the top of the script with your own entries:
 
-![](contactSetup.gif)
+```js
+const birthdays = [
+    { "name": "Alex", "date": "2000.09.14" },
+    { "name": "Sam", "date": "1998.10.09" }
+];
+```
 
-# Widget Setup
-- when using parameter iCloud the contacts are not scanned and the source at the bottom changes to 'iCloud'
-- when using parameter showAll (without using parameter iCloud) all contacts with birthdays are shown
-- if the last configuration was empty and next one is 'iCloud,showAll' then because of iCloud-Mode (all previous found contacts are used again) the showAll parameter will not have any effect, since the default mode is mode 1 (only show selected contacts)
+4. Save and run the script to preview it. Running inside Scriptable opens a large preview.
+5. Add a Scriptable widget to your Home Screen, choose a size, and select your saved script in the widget settings.
 
+No widget parameter is required. To add, edit, or remove a birthday, update the array in the script.
 
-![](setupWidget.gif)
+### Birthday format
 
-# Language
-- you can easily edit the parameter at the top of the script to show the text you like
-- example in english:
+Each entry requires a non-empty `name` and a valid `date` in `yyyy.MM.dd` format (year.month.day). Use two digits for the month and day, such as `2000.01.09`.
 
+Enter only the name and date. The script calculates `daysUntil` in memory whenever it runs. Invalid names or dates produce an error; an empty array displays a setup message.
 
+## Widget sizes
 
-![](fullySetupWidget.PNG)
+| Size | Columns | Maximum birthdays |
+| --- | --- | --- |
+| Small | 1 | 4 |
+| Medium | 2 | 8 |
+| Large | 2 | 16 |
+
+The earliest upcoming birthdays are shown first. Longer names may require smaller fonts or adjusted spacing to fit.
+
+## Appearance and customization
+
+Light mode uses a white background and black names; dark mode uses a black background and white names. The header and regular birthday details stay gray (`#918A8A`) in both modes. Today's birthday details use green (`#15803D`) and bold text.
+
+You can customize these values in the script:
+
+| Setting | What it controls |
+| --- | --- |
+| `daysTillBdayHeader`, `daysText`, `todayText` | Header and countdown labels |
+| `headerFont`, `birthdayNameFont`, `smallInfoFont` | Regular text fonts and sizes |
+| `smallInfoHilightedFont`, `fontHilightedColor` | Today's birthday styling |
+| `primaryTextColor`, `backgroundColor`, `fontColorGrey` | Text and background colors |
+| `columns`, `maxVisibleItems` | Layout and display limits inside `createWidget()` |
+| `lineLength` | Name alignment using leading spaces |
+| `monthNames` in `formatDate()` | Abbreviated month names |
+
+The header-to-body gap is set by `widget.addSpacer(4)`. The update timestamp is currently commented out in `createWidget()`; uncomment that block to display it.
+
+## Date calculation
+
+- A birthday today has `daysUntil: 0` and displays `Today!`.
+- Birthdays that have passed this year count toward next year.
+- February 29 birthdays fall on March 1 in non-leap years.
+- Calculations use the device's local calendar date and avoid daylight-saving time offsets.
+- Countdown values are recalculated when the script runs, rather than continuously.
+
+## Previous versions
+
+The script now uses only the inline `birthdays` array. The old `iCloud` and `showAll` widget parameters are ignored. Existing `customContacts.json` files are not read, modified, or deleted.
+
+The setup GIFs and screenshot included in this repository show an earlier version and may differ from the current widget.
+
+## License
+
+See [LICENSE](LICENSE).
