@@ -20,6 +20,51 @@ then uncomment the image below.
 <img src="widget-screenshot.png" alt="Birthday widgets on an iPhone Home Screen" width="360">
 -->
 
+<table>
+    <tr>
+      <td align="center">
+        <b>1x1 Lite</b><br><br>
+        <img width="574" height="574" alt="1x1 Lite"
+          src="./screenshots/one-by-one-lite.jpeg" />
+      </td>
+      <td align="center">
+        <b>1x1 Dark</b><br><br>
+        <img width="576" height="576" alt="1x1 Dark"
+          src="./screenshots/one-by-one-dark.jpeg"  />
+      </td>
+    </tr>
+  </table>
+
+  <table>
+    <tr>
+      <td align="center">
+        <b>1x2 Lite</b><br><br>
+        <img width="574" height="574" alt="1x2 Lite"
+          src="./screenshots/one-by-two-lite.jpeg" />
+      </td>
+      <td align="center">
+        <b>1x2 Dark</b><br><br>
+        <img width="576" height="576" alt="1x2 Dark"
+          src="./screenshots/one-by-two-dark.jpeg"  />
+      </td>
+    </tr>
+  </table>
+
+  <table>
+    <tr>
+      <td align="center">
+        <b>2x2 Lite</b><br><br>
+        <img width="574" height="574" alt="2x2 Lite"
+          src="./screenshots/two-by-two-lite.jpeg" />
+      </td>
+      <td align="center">
+        <b>2x2 Dark</b><br><br>
+        <img width="576" height="576" alt="2x2 Dark"
+          src="./screenshots/two-by-two-dark.jpeg"  />
+      </td>
+    </tr>
+  </table>
+
 ## Setup
 
 1. Install Scriptable on your iPhone or iPad.
